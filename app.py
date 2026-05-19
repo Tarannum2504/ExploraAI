@@ -682,34 +682,74 @@ def render_quiz_arena():
 
     questions = [
         {
-            "q": "Which plot is best for detecting outliers?",
-            "options": ["Histogram", "Boxplot", "Pie chart", "Line chart"],
-            "correct": 1,
-            "explanation": "Boxplots show the spread and extreme values clearly, making outliers easy to spot."
-        },
-        {
-            "q": "What does EDA mainly help with?",
-            "options": ["Writing code", "Understanding data", "Building hardware", "Networking"],
-            "correct": 1,
-            "explanation": "EDA is about understanding patterns and structure in data before building models."
-        },
-        {
-            "q": "What does isnull().sum() return?",
-            "options": ["Row count", "Missing value count per column", "Duplicate count", "Column data types"],
-            "correct": 1,
-            "explanation": "isnull() creates a boolean mask; .sum() counts True (missing) values per column."
-        },
-        {
-            "q": "A correlation value of 0.95 means:",
-            "options": ["Weak relationship", "No relationship", "Strong positive relationship", "Strong negative relationship"],
+            "q": "What is the primary purpose of Exploratory Data Analysis (EDA)?",
+            "options": ["To train a machine learning model", "To write production code", "To understand patterns and structure in data", "To deploy an application"],
             "correct": 2,
-            "explanation": "Values close to +1 indicate a strong positive correlation between two features."
+            "explanation": "EDA is about understanding data patterns, finding anomalies, and checking assumptions before modeling.",
+            "difficulty": "EASY"
         },
         {
-            "q": "Which method fills missing numeric values with the column average?",
-            "options": ["fillna(median)", "dropna()", "fillna(mean())", "interpolate()"],
+            "q": "Which chart is best used to show the distribution of a single numerical variable?",
+            "options": ["Pie Chart", "Histogram", "Line Chart", "Scatter Plot"],
+            "correct": 1,
+            "explanation": "Histograms show how often different ranges of numbers occur, making them perfect for seeing distributions.",
+            "difficulty": "EASY"
+        },
+        {
+            "q": "Which plot is specifically designed to highlight outliers?",
+            "options": ["Boxplot", "Bar Chart", "Line Graph", "Area Chart"],
+            "correct": 0,
+            "explanation": "Boxplots clearly display the spread of data and plot extreme values (outliers) as individual points.",
+            "difficulty": "EASY"
+        },
+        {
+            "q": "If isnull().sum() shows 50 missing values in the 'Age' column, what is generally the safest first step?",
+            "options": ["Delete all 50 rows", "Replace them with 0", "Investigate why they are missing", "Fill them with the maximum age"],
             "correct": 2,
-            "explanation": "fillna(mean()) replaces NaN values with the arithmetic mean of that column."
+            "explanation": "Always investigate missing data first. Deleting or blindly filling it might introduce bias or destroy valuable signal.",
+            "difficulty": "MEDIUM"
+        },
+        {
+            "q": "A correlation value of -0.90 between 'Price' and 'Sales' means:",
+            "options": ["As Price goes up, Sales go up", "As Price goes up, Sales go down strongly", "There is no relationship", "The data is corrupted"],
+            "correct": 1,
+            "explanation": "A correlation near -1 indicates a strong negative relationship: when one increases, the other decreases.",
+            "difficulty": "MEDIUM"
+        },
+        {
+            "q": "In statistical outlier detection, what does the 'Z-score' measure?",
+            "options": ["How many standard deviations a value is from the mean", "The absolute value of the data point", "The median of the dataset", "The difference between max and min"],
+            "correct": 0,
+            "explanation": "Z-score measures distance from the average in standard deviations. A Z-score > 3 is usually considered an outlier.",
+            "difficulty": "MEDIUM"
+        },
+        {
+            "q": "Why do we typically fill missing numeric values with the median instead of the mean when outliers are present?",
+            "options": ["Mean is harder to calculate", "Median is less affected by extreme outliers", "Median is always a whole number", "Mean creates duplicate rows"],
+            "correct": 1,
+            "explanation": "The mean can be heavily skewed by a few extreme values, whereas the median remains stable.",
+            "difficulty": "MEDIUM"
+        },
+        {
+            "q": "What happens when you run df.drop_duplicates(inplace=True)?",
+            "options": ["It removes identical rows permanently from the DataFrame", "It hides duplicates temporarily", "It highlights duplicate columns", "It deletes columns with identical names"],
+            "correct": 0,
+            "explanation": "The inplace=True parameter modifies the original DataFrame directly, permanently removing duplicate rows.",
+            "difficulty": "ADVANCED BEGINNER"
+        },
+        {
+            "q": "What does the pandas function df.describe() provide?",
+            "options": ["A summary of the column names and data types", "Statistical summaries (mean, min, max) for numeric columns", "A correlation matrix", "A list of missing values"],
+            "correct": 1,
+            "explanation": "describe() quickly generates descriptive statistics like count, mean, standard deviation, and quartiles.",
+            "difficulty": "ADVANCED BEGINNER"
+        },
+        {
+            "q": "Why is data visualization a critical step in EDA?",
+            "options": ["It makes the code run faster", "It replaces the need for data cleaning", "Human brains spot visual patterns and anomalies faster than raw numbers", "It automatically trains models"],
+            "correct": 2,
+            "explanation": "Visualizations allow us to instantly grasp trends, distributions, and outliers that are hidden in spreadsheets.",
+            "difficulty": "ADVANCED BEGINNER"
         }
     ]
 
@@ -719,6 +759,7 @@ def render_quiz_arena():
         st.session_state.quiz_streak = 0
         st.session_state.quiz_answered = False
         st.session_state.quiz_selected_option = None
+        st.session_state.question_order = np.random.permutation(len(questions)).tolist()
 
     col1, col2 = st.columns([1, 1])
     with col1:
@@ -736,18 +777,11 @@ def render_quiz_arena():
 
     if st.session_state.quiz_index >= len(questions):
         final_pct = int((st.session_state.quiz_score / len(questions)) * 100)
-        if final_pct == 100:
-            grade_msg = "🏆 PERFECT SCORE — EDA MASTER!"
-        elif final_pct >= 80:
-            grade_msg = "⚡ EXCELLENT WORK!"
-        elif final_pct >= 60:
-            grade_msg = "✅ SOLID UNDERSTANDING. KEEP GOING!"
-        else:
-            grade_msg = "📖 REVIEW THE BASICS AND RETRY."
-
+        
         st.markdown(cyber_card(
-            f'<h1 style="font-size: 4rem; color: #ADFF2F; text-align: center;">{st.session_state.quiz_score} / {len(questions)}</h1>'
-            f'<p style="text-align:center; font-family:\'Share Tech Mono\'; color:#e8e8f0;">{grade_msg}</p>',
+            f'<h1 style="font-size: 4rem; color: #ADFF2F; text-align: center; margin-bottom: 0;">{st.session_state.quiz_score} / {len(questions)}</h1>'
+            f'<p style="text-align:center; font-family:\'Share Tech Mono\'; color:#6b6b8a; font-size:1.1rem; margin-top:0;">Accuracy: {final_pct}%</p>'
+            f'<p style="text-align:center; font-family:\'Rajdhani\'; color:#e8e8f0; font-size: 1.5rem; margin-top:20px;">🎉 Great job! You completed the EDA challenge.</p>',
             title="Quiz Completed!"
         ), unsafe_allow_html=True)
 
@@ -757,10 +791,12 @@ def render_quiz_arena():
             st.session_state.quiz_streak = 0
             st.session_state.quiz_answered = False
             st.session_state.quiz_selected_option = None
+            st.session_state.question_order = np.random.permutation(len(questions)).tolist()
             st.rerun()
         return
 
-    q_data = questions[st.session_state.quiz_index]
+    curr_q_idx = st.session_state.question_order[st.session_state.quiz_index]
+    q_data = questions[curr_q_idx]
 
     # Progress bar
     progress_pct = int((st.session_state.quiz_index / len(questions)) * 100)
@@ -772,6 +808,7 @@ def render_quiz_arena():
     )
 
     st.markdown(cyber_card(
+        f'<div style="margin-bottom: 12px;"><span style="background: rgba(173,255,47,0.1); border: 1px solid #ADFF2F; color: #ADFF2F; padding: 3px 8px; font-family: \'Share Tech Mono\'; font-size: 0.8rem; letter-spacing: 1px;">DIFFICULTY: {q_data["difficulty"]}</span></div>'
         f'<p style="font-size: 1.2rem; color: #FFFFFF; font-family: \'Rajdhani\', sans-serif;">{q_data["q"]}</p>',
         title=f"Question {st.session_state.quiz_index + 1} of {len(questions)}",
         accent="purple"
