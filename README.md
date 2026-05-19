@@ -5,6 +5,8 @@
 
 **ExploraAI** is an interactive Exploratory Data Analysis (EDA) Simulation & Learning Platform. Built with a sleek cyber-minimalist aesthetic, it allows users to visually and intuitively learn how data cleaning, statistical insights, and data visualizations work in the real world.
 
+🌐 **Live Application:** [https://exploraai.streamlit.app/](https://exploraai.streamlit.app/)
+
 Created by **Tarannum Khan** (B.Tech AI/ML).  
 [Connect on LinkedIn](https://www.linkedin.com/in/tarannum2504)
 
@@ -22,7 +24,7 @@ Created by **Tarannum Khan** (B.Tech AI/ML).
 * **Data Visualization**: Altair
 * **UI/UX**: Custom HTML/CSS, Augmented-UI framework
 
-## ⚙️ Installation & Usage
+## ⚙️ Local Installation & Usage
 
 1. **Clone the repository:**
    ```bash
@@ -35,10 +37,7 @@ Created by **Tarannum Khan** (B.Tech AI/ML).
    pip install -r requirements.txt
    ```
 
-3. **Run the application:**
+3. **Run the application locally:**
    ```bash
    streamlit run app.py
    ```
-
-4. **Access the platform:**
-   Open your browser and navigate to `http://localhost:8501`.
