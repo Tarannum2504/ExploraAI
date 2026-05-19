@@ -871,7 +871,9 @@ def main():
         <div class="status-header">
             <div class="status-left">
                 <h1 style="margin: 0; color: #FFFFFF; letter-spacing: 2px;">EXPLORA<span style="color: #ADFF2F;">AI</span></h1>
-                <div data-augmented-ui="tl-clip br-clip both" style="--aug-tl: 4px; --aug-br: 4px; --aug-border-all: 1px; --aug-border-bg: #ADFF2F; background: rgba(173,255,47,0.1); padding: 4px 10px; font-family: 'Share Tech Mono'; font-size: 0.8rem; color: #ADFF2F; display: flex; align-items: center; gap: 8px;">
+                <p style="margin: 8px 0 2px 0; color: #e8e8f0; font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; font-weight: 500;">Interactive EDA Simulation & Learning Platform</p>
+                <p style="margin: 0 0 12px 0; color: #6b6b8a; font-family: 'Share Tech Mono', monospace; font-size: 0.9rem;">Created by Tarannum Khan • B.Tech AI/ML | <a href="https://www.linkedin.com/in/tarannum2504" target="_blank" style="color: #ADFF2F; text-decoration: none;">LinkedIn</a></p>
+                <div data-augmented-ui="tl-clip br-clip both" style="--aug-tl: 4px; --aug-br: 4px; --aug-border-all: 1px; --aug-border-bg: #ADFF2F; background: rgba(173,255,47,0.1); padding: 4px 10px; font-family: 'Share Tech Mono'; font-size: 0.8rem; color: #ADFF2F; display: inline-flex; align-items: center; gap: 8px;">
                     <div class="blinking-dot"></div> SYSTEM ONLINE
                 </div>
             </div>
